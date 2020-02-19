@@ -14,7 +14,7 @@
   <header class="slds-grid slds-wrap">
     <div class="slds-has-flexi-truncate slds-align-middle" style="padding-left:1em;background:white">
       <div class="slds-text-heading_large">Mandelbrot Generator</h1>
-    </div>
+      </div>
   </header>
   <article class="slds-card">
     <div class="slds-card__header slds-grid">
@@ -33,7 +33,7 @@
         <label class="slds-form-element__label" for="xposition">
           <abbr class="slds-required" title="required">* </abbr>X Position</label>
         <div class="slds-form-element__control">
-          <input type="number" id="xposition" required="" class="slds-input" value="-0.75"/>
+          <input type="number" id="xposition" required="" class="slds-input" value="-0.75" />
         </div>
       </div>
       <div class="slds-form-element">
@@ -47,7 +47,7 @@
         <label class="slds-form-element__label" for="zoom">
           <abbr class="slds-required" title="required">* </abbr>Zoom (smaller numbers zoom in, larger zoom out)</label>
         <div class="slds-form-element__control">
-          <input type="number" id="zoom" required="" class="slds-input" value="1"/>
+          <input type="number" id="zoom" required="" class="slds-input" value="1" />
         </div>
       </div>
 
@@ -60,7 +60,8 @@
         </label>
         <div class="slds-form-element__control">
           <div class="slds-slider">
-            <input id="resolution" class="slds-slider__range" type="range" min="1" max="8"  value="6" onchange="updateCanvasResolutionSlider()"/>
+            <input id="resolution" class="slds-slider__range" type="range" min="1" max="8" value="6"
+              onchange="updateCanvasResolutionSlider()" />
             <span class="slds-slider__value" id="canvasResolutionSliderValue" aria-hidden="true">6</span>
           </div>
         </div>
@@ -75,7 +76,8 @@
         </label>
         <div class="slds-form-element__control">
           <div class="slds-slider">
-            <input id="depth" class="slds-slider__range" type="range" min="10" max="10000" step="25" value="200" onchange="updateCanvasDepthSlider()"/>
+            <input id="depth" class="slds-slider__range" type="range" min="10" max="10000" step="25" value="200"
+              onchange="updateCanvasDepthSlider()" />
             <span class="slds-slider__value" id="canvasDepthSliderValue" aria-hidden="true">200</span>
           </div>
         </div>
@@ -90,7 +92,8 @@
         </label>
         <div class="slds-form-element__control">
           <div class="slds-slider">
-            <input id="canvas-width" class="slds-slider__range" type="range" min="0" max="4096" step="256" value="1024" onchange="updateCanvasWidthSlider()"/>
+            <input id="canvas-width" class="slds-slider__range" type="range" min="0" max="4096" step="256" value="1024"
+              onchange="updateCanvasWidthSlider()" />
             <span class="slds-slider__value" id="canvasWidthSliderValue" aria-hidden="true">1024</span>
           </div>
         </div>
@@ -105,23 +108,31 @@
         </label>
         <div class="slds-form-element__control">
           <div class="slds-slider">
-            <input id="canvas-height" class="slds-slider__range" type="range" min="0" max="4096" step="256" value="1024" onchange="updateCanvasHeightSlider()" />
+            <input id="canvas-height" class="slds-slider__range" type="range" min="0" max="4096" step="256" value="1024"
+              onchange="updateCanvasHeightSlider()" />
             <span class="slds-slider__value" id="canvasHeightSliderValue" aria-hidden="true">1024</span>
           </div>
         </div>
       </div>
-      
-      
-      <br/>
-      <button class="slds-button slds-button_brand" onclick="compute()">Compute Mandelbrot Set</button>
-      <button class="slds-button slds-button_brand" onclick="randomInterestingPoint()">Random Interesting Point</button>
-      <button class="slds-button slds-button_brand" onclick="drawPalette()">Show Color Palette</button>
 
+
+      <br />
+      <div class="slds-grid slds-wrap slds-gutters">
+        <div style="padding : 0.5em 0.5em 0.5em 0.5em" > <button class="slds-button slds-button_brand" onclick="compute()">Compute Mandelbrot
+            Set</button>
+        </div>
+        <div style="padding : 0.5em 0.5em 0.5em 0.5em"> <button class="slds-button slds-button_brand" onclick="randomInterestingPoint()">Random
+            Interesting
+            Point</button></div>
+        <div style="padding : 0.5em 0.5em 0.5em 0.5em"> <button class="slds-button slds-button_brand" onclick="drawPalette()">Show Color
+            Palette</button>
+        </div>
+      </div>
     </div>
   </article>
 
 
-  <article class="slds-card" id="mandelbrotdiv" >
+  <article class="slds-card" id="mandelbrotdiv">
     <div class="slds-card__header slds-grid">
       <header class="slds-media slds-media_center slds-has-flexi-truncate">
 
@@ -134,13 +145,14 @@
         </div>
       </header>
     </div>
-    <div class="slds-card__body" style="overflow-x: scroll;" >
-      <canvas id="mandelbrot" width="1024" height="1024" style="margin-right: 1em;margin-left:1em;border-style:double"></canvas>
+    <div class="slds-card__body" style="overflow-x: scroll;">
+      <canvas id="mandelbrot" width="1024" height="1024"
+        style="margin-right: 1em;margin-left:1em;border-style:double"></canvas>
     </div>
   </article>
 
 
-  <script src="@routes.Assets.versioned("javascripts/main.js")" type="text/javascript"></script>
+  <script src="@routes.Assets.versioned(" javascripts/main.js")" type="text/javascript"></script>
 </body>
 
 </html>
