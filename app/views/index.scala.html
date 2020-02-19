@@ -45,7 +45,7 @@
       </div>
       <div class="slds-form-element">
         <label class="slds-form-element__label" for="zoom">
-          <abbr class="slds-required" title="required">* </abbr>Zoom</label>
+          <abbr class="slds-required" title="required">* </abbr>Zoom (smaller numbers zoom in, larger zoom out)</label>
         <div class="slds-form-element__control">
           <input type="number" id="zoom" required="" class="slds-input" value="1"/>
         </div>
@@ -55,13 +55,13 @@
         <label class="slds-form-element__label" for="resolution">
           <span class="slds-slider-label">
             <span class="slds-slider-label__label">Resolution</span>
-            <span class="slds-slider-label__range">1 - 256</span>
+            <span class="slds-slider-label__range">1 - 8</span>
           </span>
         </label>
         <div class="slds-form-element__control">
           <div class="slds-slider">
-            <input id="resolution" class="slds-slider__range" type="range" min="1" max="256"  value="128" onchange="updateCanvasResolutionSlider()"/>
-            <span class="slds-slider__value" id="canvasResolutionSliderValue" aria-hidden="true">128</span>
+            <input id="resolution" class="slds-slider__range" type="range" min="1" max="8"  value="6" onchange="updateCanvasResolutionSlider()"/>
+            <span class="slds-slider__value" id="canvasResolutionSliderValue" aria-hidden="true">6</span>
           </div>
         </div>
       </div>
@@ -115,6 +115,7 @@
       <br/>
       <button class="slds-button slds-button_brand" onclick="compute()">Compute Mandelbrot Set</button>
       <button class="slds-button slds-button_brand" onclick="randomInterestingPoint()">Random Interesting Point</button>
+      <button class="slds-button slds-button_brand" onclick="drawPalette()">Show Color Palette</button>
 
     </div>
   </article>

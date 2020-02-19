@@ -1,6 +1,5 @@
-const paletteSize = 768;
+//global vars
 const partitionSize = 256; //size of a rendered partion in pixels squared. this is also the max resolution
-
 var palette = [];
 var canvasWidth = 1024;
 var canvasHeight = 1024;
@@ -8,6 +7,7 @@ var mandelbrotX = -0.75;
 var mandelbrotY = 0.0;
 var canvasZoom = 1;
 
+//used to determine [x,y] of a mouse click in an HTMLCanvasElement
 function relMouseCoords(event) {
   var totalOffsetX = 0;
   var totalOffsetY = 0;
@@ -35,19 +35,20 @@ window.onload = function(e) {
     0.0325,
     3.3 + (2 * Math.PI) / 3,
     3.3 + Math.PI / 3,
-    3.3 + 0.0,
+    3.3,
     128,
     127,
     768
   );
   var canvas = document.getElementById("mandelbrot");
-  canvas.addEventListener("click", this.canvasClicked);
+  canvas.addEventListener("dblclick", this.canvasClicked);
   this.compute();
 };
 
-function canvasClicked(evt) {
-  //var rect = canvas.getBoundingClientRect();
-  var coords = this.relMouseCoords(evt);
+//recenters the fractal where the user double clicked in the canvas
+//and redraws the fractal
+function canvasClicked(e) {
+  var coords = this.relMouseCoords(e);
   //compute the position in the mandelbrot drawing
   let startx = mandelbrotX - ((canvasZoom / 2) * canvasWidth) / partitionSize;
   let starty = mandelbrotY + ((canvasZoom / 2) * canvasHeight) / partitionSize;
@@ -57,8 +58,10 @@ function canvasClicked(evt) {
   let ytransform = starty - (coords.y / canvasHeight) * ywidth;
   document.getElementById("xposition").value = xtransform;
   document.getElementById("yposition").value = ytransform;
+  compute();
 }
 
+//finds a random point along the edge of the mandelbrot set
 function randomInterestingPoint() {
   var theta = Math.random() * 2 * 3.1415926535;
   var r = 0.25;
@@ -69,6 +72,7 @@ function randomInterestingPoint() {
   document.getElementById("zoom").value = 0.025;
 }
 
+//form controls
 function updateCanvasWidthSlider() {
   var slider = document.getElementById("canvasWidthSliderValue");
   slider.innerText = document.getElementById("canvas-width").value;
@@ -89,6 +93,8 @@ function updateCanvasResolutionSlider() {
   slider.innerText = document.getElementById("resolution").value;
 }
 
+
+//Color gradient generator
 function RGB2Color(r, g, b) {
   return "#" + byte2Hex(r) + byte2Hex(g) + byte2Hex(b);
 }
@@ -130,26 +136,31 @@ function makeColorGradient(
   }
 }
 
+
+//Makes API calls to get a portion of the fractal. It then stitches together
+//the portions by drawing them on the canvas in the right place. The browser
+//permits 6 open calls at the same time... any more than that and they get 
+//queued up, so at most 6 image fragments will get computed at the same time
 function compute() {
   let xposition = parseFloat(document.getElementById("xposition").value);
   let yposition = parseFloat(document.getElementById("yposition").value);
   let zoom = parseFloat(document.getElementById("zoom").value);
-  let resolution = parseInt(document.getElementById("resolution").value);
+  let resolution = Math.pow(2,parseInt(document.getElementById("resolution").value));
   let depth = parseInt(document.getElementById("depth").value);
   let width = parseInt(document.getElementById("canvas-width").value);
   let height = parseInt(document.getElementById("canvas-height").value);
 
   //let's compute how many partitions (divide and conquer) for the canvas size.
   //let's make a partition (or a square block to be computed) 256x256
-  let xpartitions = Math.ceil(width / partitionSize);
-  let ypartitions = Math.ceil(height / partitionSize);
+  let numBlocksX = Math.ceil(width / partitionSize);
+  let numBlocksY = Math.ceil(height / partitionSize);
 
   //lets put xposition,yposition in the center of the map
   //let's compute startx and starty (upper left corner)
   let startx = xposition - ((zoom / 2) * width) / partitionSize;
   let starty = yposition + ((zoom / 2) * height) / partitionSize;
-  console.log(xposition, yposition, zoom, width, height, partitionSize);
-  console.log(startx, starty);
+  //console.log(xposition, yposition, zoom, width, height, partitionSize);
+  //console.log(startx, starty);
 
   var canvas = document.getElementById("mandelbrot");
   canvas.height = height;
@@ -162,21 +173,19 @@ function compute() {
   mandelbrotY = yposition;
   canvasZoom = zoom;
 
-  for (let y = 0; y < ypartitions; y++) {
-    for (let x = 0; x < xpartitions; x++) {
+  for (let y = 0; y < numBlocksY; y++) {
+    for (let x = 0; x < numBlocksX; x++) {
       var xhr = new XMLHttpRequest();
       let xpos = startx + x * zoom;
       let ypos = starty - y * zoom;
-      console.log(x, y, xpos, ypos);
+      //console.log(x, y, xpos, ypos);
       xhr.open(
         "GET",
         "/mandelbrot?startx=" +
           xpos +
           "&starty=" +
           ypos +
-          "&xdistance=" +
-          zoom +
-          "&ydistance=" +
+          "&distance=" +
           zoom +
           "&resolution=" +
           resolution +
@@ -186,16 +195,8 @@ function compute() {
       xhr.onreadystatechange = function() {
         if (this.readyState === 4) {
           if (this.status === 200) {
-            console.log(this.responseText);
-            drawPortion(
-              this.responseText,
-              x,
-              y,
-              resolution,
-              width,
-              height,
-              depth
-            );
+            //console.log(this.responseText);
+            drawFractal(this.responseText, x, y, resolution, width, height);
           } else {
             console.error(this.statusText);
           }
@@ -206,23 +207,9 @@ function compute() {
   }
 }
 
-function drawPalette() {
-  var canvas = document.getElementById("mandelbrot");
-  var ctx = canvas.getContext("2d");
-  canvas.height = palette.length;
-  canvas.width = 768;
-  for (let i = 0; i < palette.length; i++) {
-    ctx.fillStyle = palette[i];
-    ctx.fillRect(0, i, 768, 1);
-  }
-}
-
-function drawPortion(grid, x, y, resolution, width, height, depth) {
-  const xpartitions = Math.ceil(width / partitionSize);
-  const ypartitions = Math.ceil(height / partitionSize);
-  const aspectRatio = width / height;
-
-  //console.log(grid,x,y);
+function drawFractal(grid, x, y, res, width, height) {
+  const numBlocksX = Math.ceil(width / partitionSize);
+  const numBlocksY = Math.ceil(height / partitionSize);
   var canvas = document.getElementById("mandelbrot");
   var ctx = canvas.getContext("2d");
   var g = JSON.parse(grid);
@@ -230,16 +217,27 @@ function drawPortion(grid, x, y, resolution, width, height, depth) {
     for (let i = 0; i < g[j].length; i++) {
       var colorpick = Math.round(g[i][j]) % palette.length;
       ctx.fillStyle = palette[colorpick];
-      ctx.fillRect(
-        Math.ceil(
-          (x * width) / xpartitions + (i * width) / xpartitions / resolution
-        ),
-        Math.ceil(
-          (y * height) / ypartitions + (j * height) / ypartitions / resolution
-        ),
-        Math.ceil(partitionSize / resolution),
-        Math.ceil(partitionSize / resolution)
+      let canvasX = Math.ceil(
+        (x * width) / numBlocksX + (i * width) / numBlocksX / res
       );
+      let canvasY = Math.ceil(
+        (y * height) / numBlocksY + (j * height) / numBlocksY / res
+      );
+      let length = Math.ceil(partitionSize / res);
+      ctx.fillRect(canvasX, canvasY, length, length);
     }
   }
 }
+
+//Shows the generated color pallette. This can be altered by changing the params
+//that feed the makeColorGradient function
+function drawPalette() {
+    var canvas = document.getElementById("mandelbrot");
+    var ctx = canvas.getContext("2d");
+    canvas.height = palette.length;
+    canvas.width = 768;
+    for (let i = 0; i < palette.length; i++) {
+      ctx.fillStyle = palette[i];
+      ctx.fillRect(0, i, 768, 1);
+    }
+  }
