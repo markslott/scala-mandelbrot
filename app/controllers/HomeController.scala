@@ -22,11 +22,11 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
     Ok(views.html.index())
   }
 
-  def mandelbrot(startx : Double, starty : Double, distance : Double, resolution : Integer, depth : Long) =
+  def mandelbrot(startx : Double, starty : Double, xdistance : Double, ydistance: Double, resolution : Integer, depth : Long) =
      Action { implicit request: Request[AnyContent] =>
      val m = new Mandelbrot();
      val c = Complex(startx,starty);
-     val json = m.draw(c,distance,resolution,depth);
+     val json = m.draw(c,xdistance,ydistance,resolution,depth);
      Ok(json);
   }
 }

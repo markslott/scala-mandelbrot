@@ -11,6 +11,11 @@
 </head>
 
 <body>
+  <header class="slds-grid slds-wrap">
+    <div class="slds-has-flexi-truncate slds-align-middle" style="padding-left:1em;background:white">
+      <div class="slds-text-heading_large">Mandelbrot Generator</h1>
+    </div>
+  </header>
   <article class="slds-card">
     <div class="slds-card__header slds-grid">
       <header class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -35,38 +40,87 @@
         <label class="slds-form-element__label" for="yposition">
           <abbr class="slds-required" title="required">* </abbr>Y Position</label>
         <div class="slds-form-element__control">
-          <input type="number" id="yposition" required="" class="slds-input" value="0" />
+          <input type="number" id="yposition" required="" class="slds-input" value="0.0" />
         </div>
       </div>
       <div class="slds-form-element">
         <label class="slds-form-element__label" for="zoom">
           <abbr class="slds-required" title="required">* </abbr>Zoom</label>
         <div class="slds-form-element__control">
-          <input type="number" id="zoom" required="" class="slds-input" value="5"/>
+          <input type="number" id="zoom" required="" class="slds-input" value="1"/>
         </div>
       </div>
+
       <div class="slds-form-element">
         <label class="slds-form-element__label" for="resolution">
-          <abbr class="slds-required" title="required">* </abbr>Resolution</label>
+          <span class="slds-slider-label">
+            <span class="slds-slider-label__label">Resolution</span>
+            <span class="slds-slider-label__range">1 - 256</span>
+          </span>
+        </label>
         <div class="slds-form-element__control">
-          <input type="number" id="resolution" required="" class="slds-input" value="64" />
+          <div class="slds-slider">
+            <input id="resolution" class="slds-slider__range" type="range" min="1" max="256"  value="128" onchange="updateCanvasResolutionSlider()"/>
+            <span class="slds-slider__value" id="canvasResolutionSliderValue" aria-hidden="true">128</span>
+          </div>
         </div>
       </div>
+
       <div class="slds-form-element">
         <label class="slds-form-element__label" for="depth">
-          <abbr class="slds-required" title="required">* </abbr>Depth</label>
+          <span class="slds-slider-label">
+            <span class="slds-slider-label__label">Depth (number of iterations)</span>
+            <span class="slds-slider-label__range">10 - 10000</span>
+          </span>
+        </label>
         <div class="slds-form-element__control">
-          <input type="number" id="depth" required="" class="slds-input" value="255"/>
+          <div class="slds-slider">
+            <input id="depth" class="slds-slider__range" type="range" min="10" max="10000" step="25" value="200" onchange="updateCanvasDepthSlider()"/>
+            <span class="slds-slider__value" id="canvasDepthSliderValue" aria-hidden="true">200</span>
+          </div>
         </div>
       </div>
+
+      <div class="slds-form-element">
+        <label class="slds-form-element__label" for="canvas-width">
+          <span class="slds-slider-label">
+            <span class="slds-slider-label__label">Canvas Width (in pixels)</span>
+            <span class="slds-slider-label__range">256 - 4096</span>
+          </span>
+        </label>
+        <div class="slds-form-element__control">
+          <div class="slds-slider">
+            <input id="canvas-width" class="slds-slider__range" type="range" min="0" max="4096" step="256" value="1024" onchange="updateCanvasWidthSlider()"/>
+            <span class="slds-slider__value" id="canvasWidthSliderValue" aria-hidden="true">1024</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="slds-form-element">
+        <label class="slds-form-element__label" for="canvas-height">
+          <span class="slds-slider-label">
+            <span class="slds-slider-label__label">Canvas Height (in pixels)</span>
+            <span class="slds-slider-label__range">256 - 4096</span>
+          </span>
+        </label>
+        <div class="slds-form-element__control">
+          <div class="slds-slider">
+            <input id="canvas-height" class="slds-slider__range" type="range" min="0" max="4096" step="256" value="1024" onchange="updateCanvasHeightSlider()" />
+            <span class="slds-slider__value" id="canvasHeightSliderValue" aria-hidden="true">1024</span>
+          </div>
+        </div>
+      </div>
+      
+      
       <br/>
       <button class="slds-button slds-button_brand" onclick="compute()">Compute Mandelbrot Set</button>
+      <button class="slds-button slds-button_brand" onclick="randomInterestingPoint()">Random Interesting Point</button>
 
     </div>
   </article>
 
 
-  <article class="slds-card">
+  <article class="slds-card" id="mandelbrotdiv" >
     <div class="slds-card__header slds-grid">
       <header class="slds-media slds-media_center slds-has-flexi-truncate">
 
@@ -79,8 +133,8 @@
         </div>
       </header>
     </div>
-    <div class="slds-card__body slds-card__body_inner">
-      <canvas id="mandelbrot" width="1024" height="1024"></canvas>
+    <div class="slds-card__body" style="overflow-x: scroll;" >
+      <canvas id="mandelbrot" width="1024" height="1024" style="margin-right: 1em;margin-left:1em;border-style:double"></canvas>
     </div>
   </article>
 

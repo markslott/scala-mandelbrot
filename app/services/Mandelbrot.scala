@@ -7,7 +7,7 @@ import play.api.libs.json._
 
 class Mandelbrot {
 
-    val escaperadius = 50
+    val escaperadius = 2
 
     def compute(z0 : Complex, depth : Long) : Long =  {
         var iterations = 0;
@@ -17,30 +17,24 @@ class Mandelbrot {
             iterations += 1;
         }
         var color = 0.0;
+        var modulus = z.abs;
+        var modulusSquared = modulus * modulus;
         if (iterations < depth) {
-            /*z = z * z + z0;
-            iterations += 1;
-            z = z * z + z0;
-            iterations += 1;*/
-            val mu = iterations - Math.log(Math.log(z.abs))/Math.log(2);
-            color = mu / iterations * 768;
-            if (color >= 767)
+            val mu = iterations - Math.log(Math.log(modulusSquared))/Math.log(2);
+            //color = mu / iterations * 768;
+            color = mu;
+            /*if (color >= 767)
                 color = 767;
-            else if (color < 0)
+            else*/ if (color < 0)
                 color = 0;
         }
-
-        
-             //smooth color
-        //var nsmooth = iterations + 1 - Math.log(Math.log(z.abs))/Math.log(2);
-       
-        color.toInt;
+        color.toInt % 768;
     }
 
-    def draw(start : Complex, distance : Double, resolution : Integer, depth : Long) : JsValue = {
+    def draw(start : Complex, xdistance : Double, ydistance : Double, resolution : Integer, depth : Long) : JsValue = {
         var grid = Array.ofDim[Long](resolution,resolution);
         for (y <- 0 until resolution; x <- 0 until resolution) {
-            grid(x)(y) = compute(Complex(start.r + distance * x / resolution ,start.i - distance * y / resolution), depth);
+            grid(x)(y) = compute(Complex(start.r + xdistance * x / resolution ,start.i - ydistance * y / resolution), depth);
         }
         Json.toJson(grid);
     }
