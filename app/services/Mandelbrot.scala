@@ -26,11 +26,15 @@ class Mandelbrot {
         def smoothValue(i:Long,x:Double) = i - Math.log(Math.log(x))/Math.log(2);
         val mu = smoothValue(iterations,squared(finalZ.abs));
         val color = if (didNotEscape) 0.0 else if (mu < 0) 0.0 else mu;
-        color.toInt % 768; //that's the size of the pallette. maybe should do this on the client size
+        color.toInt;
     }
 
     //takes a square grid and computes the color for each individual point. Returns a two 
-    //dimensional array as a JSON data structure
+    //dimensional array as a JSON data structure. Start refers to the top left corner of 
+    //the mandelbrot image to be computed.  Distance is how far down and to the right (computes
+    //a square, resolution defines how granular. For example a resolution of 12 will make a 12x12
+    //and only sample 144 points in the defined square. Depth is how far down to look - deeper zoom
+    //levels will need larger depth values to see if that point escapes or not.
     def draw(start : Complex, distance : Double, resolution : Integer, depth : Long) : JsValue = {
         var grid = Array.ofDim[Long](resolution,resolution);
         for (y <- 0 until resolution; x <- 0 until resolution) {
