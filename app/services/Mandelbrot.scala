@@ -7,26 +7,26 @@ class Mandelbrot {
 
     val escaperadius = 2; //must be set to at least 2
 
+    def squared(x:Double) = x*x;
+
     //where the magic happens - is a given complex number a member of the mandelbrot set
     //or not? The number of iterations it takes escape (or not) determines the color
     //using a smoothing algorithm to make the color transitons look smooth
     def compute(z0 : Complex, depth : Long) : Long =  {
-        var iterations = 0;
-        var z = z0.copy();
-        while ((z.abs < escaperadius) && (iterations < depth)) {
-            z = z * z + z0;
-            iterations += 1;
-        }
-        var color = 0.0;
-        var modulus = z.abs;
-        var modulusSquared = modulus * modulus;
-        if (iterations < depth) {
-            val mu = iterations - Math.log(Math.log(modulusSquared))/Math.log(2);
-            color = mu;
-            if (color < 0)
-                color = 0;
-        }
-        color.toInt % 768;
+        
+        def mandelbrot = (z0: Complex) => {
+            var (i,z) = (0,z0.copy());
+            while ((z.abs < escaperadius) && (i < depth)) {
+                z = z * z + z0;
+                i += 1;
+            } 
+            (z,i,i >= depth)
+         }
+        val (finalZ,iterations,didNotEscape) = mandelbrot(z0);
+        def smoothValue(i:Long,x:Double) = i - Math.log(Math.log(x))/Math.log(2);
+        val mu = smoothValue(iterations,squared(finalZ.abs));
+        val color = if (didNotEscape) 0.0 else if (mu < 0) 0.0 else mu;
+        color.toInt % 768; //that's the size of the pallette. maybe should do this on the client size
     }
 
     //takes a square grid and computes the color for each individual point. Returns a two 
