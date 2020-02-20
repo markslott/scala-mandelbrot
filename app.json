@@ -1,0 +1,14 @@
+{
+    "name" : "Mandelbrot Set Generator",
+    "description" : "Web app that generates pretty Mandelbrot set images. Uses Play Framework with Scala",
+    "repository" : "https://github.com/markslott/scala-mandelbrot",
+    "logo" : "https://www.playframework.com/assets/images/logos/1d627942f0b2f115f8638936a212244a-play_icon_full_color.png",
+    "keywords" : ["scala","play","mandelbrot","fractal"],
+    "env" : {
+        "APPLICATION_SECRET" : {
+            "description" : "Secret key required by Play framework",
+            "generator" : "secret"
+        }
+    },
+    "success_url" : "/"
+}
