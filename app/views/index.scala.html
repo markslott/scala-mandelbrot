@@ -264,14 +264,13 @@
             <div style="padding : 0.5em 0.5em 0.5em 0.5em"> <button class="slds-button slds-button_brand" onclick="drawPalette()">Show Color
                 Palette</button>
             </div>
+            <div style="padding : 0.5em 0.5em 0.5em 0.5em"> <a class="slds-button slds-button_brand"  href="javascript:saveImage()" download>Image Snapshot</a>
+          </div>
           </div>
         </div>
       </article>
     </div>
   </div>
-
-  
-
 
   <article class="slds-card">
     <div class="slds-card__header slds-grid">
@@ -280,16 +279,29 @@
         <div class="slds-media__body">
           <h2 class="slds-card__header-title">
             <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="Mandelbrot">
-              <span>Mandelbrot Set Result</span><br/>
+              <div>
+                <div class="slds-grid slds-grid_align-spread slds-p-bottom_x-small" id="progress-bar-label-id-6">
+                  <span>Mandelbrot Set Result</span>
+                  <span aria-hidden="true">
+                    <strong id="progress-complete-text">25% Complete</strong>
+                  </span>
+                </div>
+                <div class="slds-progress-bar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25" aria-labelledby="progress-bar-label-id-6" role="progressbar">
+                  <span class="slds-progress-bar__value" id="progress-complete" style="width:25%">
+                    <span class="slds-assistive-text">Progress: 25%</span>
+                  </span>
+                </div>
+              </div>
               <span class="slds-text-body_small">double click to move around the set</span>
             </a>
           </h2>
         </div>
       </header>
     </div>
-    <div class="slds-card__body" style="overflow-x: scroll;">
+    <div class="slds-card__body slds-align_absolute-center" style="overflow-x: scroll;">
       <canvas id="mandelbrot" width="1024" height="1024"
         style="margin-right: 1em;margin-left:1em;border-style:double;filter: blur(0px) hue-rotate(0deg) saturate(100%) grayscale(0%) contrast(100%) brightness(100%) invert(0);"></canvas>
+      <canvas id="mandelbrot-copy" style="display: none;"></canvas>  
     </div>
   </article>
 

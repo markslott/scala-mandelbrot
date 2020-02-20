@@ -45,6 +45,23 @@ window.onload = function(e) {
   this.compute();
 };
 
+function saveImage() {
+    var canvas = document.getElementById("mandelbrot");
+    var canvas2 = document.getElementById("mandelbrot-copy");
+    canvas2.height = canvas.height;
+    canvas2.width = canvas.width;
+    var filter = getComputedStyle(canvas).filter;
+    var ctx2 = canvas2.getContext("2d");
+    ctx2.filter = filter;
+    ctx2.drawImage(canvas,0,0);
+    var img = canvas2.toDataURL("image/jpeg");
+    var iframe = "<iframe width='"+canvas.width+"px' height='"+canvas.height+"px' src='" + img + "'></iframe>"
+    var x = window.open();
+    x.document.open();
+    x.document.write(iframe);
+    x.document.close();
+}
+
 //recenters the fractal where the user double clicked in the canvas
 //and redraws the fractal
 function canvasClicked(e) {
@@ -70,6 +87,7 @@ function randomInterestingPoint() {
   document.getElementById("xposition").value = x;
   document.getElementById("yposition").value = y;
   document.getElementById("zoom").value = 0.025;
+  compute();
 }
 
 //form controls
@@ -109,8 +127,14 @@ function updateCanvasFilterSlider() {
     var invert = document.getElementById("invert").checked;
     var invertval = invert ? 1 : 0;
     var canvas = document.getElementById("mandelbrot");
-    
     canvas.style.filter = "blur("+blur+"px) hue-rotate("+hue+"deg) saturate("+sat+"%) grayscale("+grayscale+"%) contrast("+contrast+"%) brightness("+ brightness +"%) invert("+invertval+")" ;
+}
+
+function updateProgressComplete(progress) {
+    progress = Math.round(progress);
+    var progressBar = document.getElementById("progress-complete");
+    progressBar.style.width = progress+"%";
+    document.getElementById("progress-complete-text").innerText = progress + "% Complete";
 }
 
 
@@ -193,6 +217,10 @@ function compute() {
   mandelbrotY = yposition;
   canvasZoom = zoom;
 
+  let blocksCompleted = 0;
+  let totalBlocks = numBlocksX * numBlocksY;
+  updateProgressComplete(0);
+
   for (let y = 0; y < numBlocksY; y++) {
     for (let x = 0; x < numBlocksX; x++) {
       var xhr = new XMLHttpRequest();
@@ -217,6 +245,8 @@ function compute() {
           if (this.status === 200) {
             //console.log(this.responseText);
             drawFractal(this.responseText, x, y, resolution, width, height);
+            blocksCompleted++;
+            updateProgressComplete(blocksCompleted/totalBlocks*100);
           } else {
             console.error(this.statusText);
           }
