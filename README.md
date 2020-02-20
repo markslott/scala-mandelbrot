@@ -1,5 +1,5 @@
 # scala-mandelbrot
-##Mandelbrot set generator written using Scala
+## Mandelbrot set generator written using Scala
 
 Built using Play Framework for Scala (https://www.playframework.com/)
 You will need to have sbt installed to run the app locally.
