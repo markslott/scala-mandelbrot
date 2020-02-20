@@ -93,6 +93,26 @@ function updateCanvasResolutionSlider() {
   slider.innerText = document.getElementById("resolution").value;
 }
 
+function updateCanvasFilterSlider() {
+    var blur = document.getElementById("blur").value;
+    document.getElementById("canvasBlurSliderValue").innerText = blur;
+    var hue = document.getElementById("hue-rotate").value;
+    document.getElementById("canvasHueRotateSliderValue").innerText = hue;
+    var sat = document.getElementById("saturation").value;
+    document.getElementById("canvasSaturationSliderValue").innerText = sat;
+    var grayscale = document.getElementById("grayscale").value;
+    document.getElementById("canvasGrayscaleSliderValue").innerText = grayscale;
+    var contrast = document.getElementById("contrast").value;
+    document.getElementById("canvasContrastSliderValue").innerText = contrast;
+    var brightness = document.getElementById("brightness").value;
+    document.getElementById("canvasBrightnessSliderValue").innerText = brightness;
+    var invert = document.getElementById("invert").checked;
+    var invertval = invert ? 1 : 0;
+    var canvas = document.getElementById("mandelbrot");
+    
+    canvas.style.filter = "blur("+blur+"px) hue-rotate("+hue+"deg) saturate("+sat+"%) grayscale("+grayscale+"%) contrast("+contrast+"%) brightness("+ brightness +"%) invert("+invertval+")" ;
+}
+
 
 //Color gradient generator
 function RGB2Color(r, g, b) {
