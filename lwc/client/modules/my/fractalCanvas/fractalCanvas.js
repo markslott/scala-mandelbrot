@@ -4,7 +4,6 @@ import { relMouseCoords, partitionSize, palette } from "my/library";
 HTMLCanvasElement.prototype.relMouseCoords = relMouseCoords;
 
 export default class FractalCanvas extends LightningElement {
-  
   @api xposition;
   @api yposition;
   @api zoom;
@@ -34,24 +33,26 @@ export default class FractalCanvas extends LightningElement {
     }
   }
 
-  @api 
+  @api
   performImageTransform() {
-      var styles = "";
-      styles += "blur("+this.blur+"0px) ";
-      styles += "hue-rotate("+this.hue+"deg) ";
-      styles += "saturate("+this.saturation+"%) ";
-      styles += "grayscale("+this.grayscale+"%) ";
-      styles += "contrast("+this.contrast+"%) ";
-      styles += "brightness("+this.brightness+"%) ";
-      styles += "invert("+this.inverted+")";
-      var canvas = this.template.querySelector("canvas[data-id='mandelbrot']");
-      canvas.style.filter = styles;
+    var styles = "";
+    styles += "blur(" + this.blur + "0px) ";
+    styles += "hue-rotate(" + this.hue + "deg) ";
+    styles += "saturate(" + this.saturation + "%) ";
+    styles += "grayscale(" + this.grayscale + "%) ";
+    styles += "contrast(" + this.contrast + "%) ";
+    styles += "brightness(" + this.brightness + "%) ";
+    styles += "invert(" + this.inverted + ")";
+    var canvas = this.template.querySelector("canvas[data-id='mandelbrot']");
+    canvas.style.filter = styles;
   }
 
   @api
   saveImage() {
     var canvas = this.template.querySelector("canvas[data-id='mandelbrot']");
-    var canvas2 = this.template.querySelector("canvas[data-id='mandelbrot-copy']");
+    var canvas2 = this.template.querySelector(
+      "canvas[data-id='mandelbrot-copy']"
+    );
     canvas2.height = canvas.height;
     canvas2.width = canvas.width;
     var filter = getComputedStyle(canvas).filter;
@@ -134,10 +135,8 @@ export default class FractalCanvas extends LightningElement {
 
     //lets put xposition,yposition in the center of the map
     //let's compute startx and starty (upper left corner)
-    let startx =
-      this.xposition - this.zoom * (this.width / 2 / partitionSize);
-    let starty =
-      this.yposition + this.zoom * (this.height / 2 / partitionSize);
+    let startx = this.xposition - this.zoom * (this.width / 2 / partitionSize);
+    let starty = this.yposition + this.zoom * (this.height / 2 / partitionSize);
 
     var canvas = this.template.querySelector("canvas");
     canvas.height = this.height;
