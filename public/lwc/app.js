@@ -439,6 +439,7 @@ class App extends lwc__WEBPACK_IMPORTED_MODULE_0__["LightningElement"] {
     fractal.grayscale = event.detail.grayscale;
     fractal.contrast = event.detail.contrast;
     fractal.brightness = event.detail.brightness;
+    fractal.inverted = event.detail.inverted;
     fractal.performImageTransform();
   }
 
@@ -681,6 +682,7 @@ class FractalCanvas extends lwc__WEBPACK_IMPORTED_MODULE_0__["LightningElement"]
     this.grayscale = void 0;
     this.contrast = void 0;
     this.brightness = void 0;
+    this.inverted = void 0;
     this.percentComplete = void 0;
     this._blocksCompleted = 0;
     this._totalBlocks = void 0;
@@ -704,7 +706,7 @@ class FractalCanvas extends lwc__WEBPACK_IMPORTED_MODULE_0__["LightningElement"]
     styles += "grayscale(" + this.grayscale + "%) ";
     styles += "contrast(" + this.contrast + "%) ";
     styles += "brightness(" + this.brightness + "%) ";
-    styles += "invert(0)";
+    styles += "invert(" + this.inverted + ")";
     var canvas = this.template.querySelector("canvas[data-id='mandelbrot']");
     canvas.style.filter = styles;
   }
@@ -848,6 +850,9 @@ Object(lwc__WEBPACK_IMPORTED_MODULE_0__["registerDecorators"])(FractalCanvas, {
       config: 0
     },
     brightness: {
+      config: 0
+    },
+    inverted: {
       config: 0
     }
   },
@@ -1470,7 +1475,8 @@ function tmpl($api, $cmp, $slotset, $ctx) {
     t: api_text,
     h: api_element,
     b: api_bind,
-    c: api_custom_element
+    c: api_custom_element,
+    gid: api_scoped_id
   } = $api;
   const {
     _m0,
@@ -1478,7 +1484,8 @@ function tmpl($api, $cmp, $slotset, $ctx) {
     _m2,
     _m3,
     _m4,
-    _m5
+    _m5,
+    _m6
   } = $ctx;
   return [api_element("article", {
     classMap: {
@@ -1487,7 +1494,7 @@ function tmpl($api, $cmp, $slotset, $ctx) {
     styleMap: {
       "height": "100%"
     },
-    key: 13
+    key: 21
   }, [api_element("div", {
     classMap: {
       "slds-card__header": true,
@@ -1527,7 +1534,7 @@ function tmpl($api, $cmp, $slotset, $ctx) {
       "slds-card__body": true,
       "slds-card__body_inner": true
     },
-    key: 12
+    key: 20
   }, [api_custom_element("my-slider", my_slider__WEBPACK_IMPORTED_MODULE_1__["default"], {
     props: {
       "min": "0",
@@ -1600,7 +1607,65 @@ function tmpl($api, $cmp, $slotset, $ctx) {
     on: {
       "change": _m5 || ($ctx._m5 = api_bind($cmp.updateBrightness))
     }
-  }, [])])])];
+  }, []), api_element("div", {
+    classMap: {
+      "slds-form-element": true
+    },
+    styleMap: {
+      "paddingTop": "0.5em"
+    },
+    key: 19
+  }, [api_element("label", {
+    classMap: {
+      "slds-checkbox_toggle": true,
+      "slds-grid": true
+    },
+    key: 18
+  }, [api_element("span", {
+    classMap: {
+      "slds-form-element__label": true,
+      "slds-m-bottom_none": true
+    },
+    key: 12
+  }, [api_text("Invert")]), api_element("input", {
+    attrs: {
+      "type": "checkbox",
+      "data-id": "invert",
+      "name": "checkbox-inverted",
+      "aria-describedby": `${api_scoped_id("checkbox-inverted")}`
+    },
+    props: {
+      "value": $cmp.inverted
+    },
+    key: 13,
+    on: {
+      "change": _m6 || ($ctx._m6 = api_bind($cmp.updateInverted))
+    }
+  }, []), api_element("span", {
+    classMap: {
+      "slds-checkbox_faux_container": true
+    },
+    attrs: {
+      "id": api_scoped_id("checkbox-inverted"),
+      "aria-live": "assertive"
+    },
+    key: 17
+  }, [api_element("span", {
+    classMap: {
+      "slds-checkbox_faux": true
+    },
+    key: 14
+  }, []), api_element("span", {
+    classMap: {
+      "slds-checkbox_on": true
+    },
+    key: 15
+  }, [api_text("Inverted")]), api_element("span", {
+    classMap: {
+      "slds-checkbox_off": true
+    },
+    key: 16
+  }, [api_text("Normal")])])])])])])];
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(lwc__WEBPACK_IMPORTED_MODULE_2__["registerTemplate"])(tmpl));
@@ -1688,7 +1753,11 @@ class FractalControls extends lwc__WEBPACK_IMPORTED_MODULE_0__["LightningElement
     this.sendEvent();
   }
 
-  updateInverted(event) {}
+  updateInverted(event) {
+    var invert = event.target.checked;
+    this.inverted = invert ? 1 : 0;
+    this.sendEvent();
+  }
 
   sendEvent() {
     this.dispatchEvent(new CustomEvent("change", {

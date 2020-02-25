@@ -52,7 +52,9 @@ export default class FractalControls extends LightningElement {
     }
 
     updateInverted(event) {
-        
+        var invert = event.target.checked;
+        this.inverted = invert ? 1 : 0;
+        this.sendEvent();
     }
 
     sendEvent() {

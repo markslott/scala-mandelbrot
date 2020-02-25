@@ -25,6 +25,7 @@ export default class App extends LightningElement {
         fractal.grayscale = event.detail.grayscale;
         fractal.contrast = event.detail.contrast;
         fractal.brightness = event.detail.brightness;
+        fractal.inverted = event.detail.inverted;
         fractal.performImageTransform();
     }
 

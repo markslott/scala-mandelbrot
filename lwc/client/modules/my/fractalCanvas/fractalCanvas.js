@@ -18,6 +18,7 @@ export default class FractalCanvas extends LightningElement {
   @api grayscale;
   @api contrast;
   @api brightness;
+  @api inverted;
 
   percentComplete;
   _blocksCompleted = 0;
@@ -42,7 +43,7 @@ export default class FractalCanvas extends LightningElement {
       styles += "grayscale("+this.grayscale+"%) ";
       styles += "contrast("+this.contrast+"%) ";
       styles += "brightness("+this.brightness+"%) ";
-      styles += "invert(0)";
+      styles += "invert("+this.inverted+")";
       var canvas = this.template.querySelector("canvas[data-id='mandelbrot']");
       canvas.style.filter = styles;
   }
