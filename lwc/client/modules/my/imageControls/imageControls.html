@@ -4,7 +4,10 @@
       <header class="slds-media slds-media_center slds-has-flexi-truncate">
         <div class="slds-media__body">
           <h2 class="slds-card__header-title">
-            <a href="javascript:void(0);" class="slds-card__header-link slds-truncate">
+            <a
+              href="javascript:void(0);"
+              class="slds-card__header-link slds-truncate"
+            >
               <span>Image Transform Controls</span>
             </a>
           </h2>
@@ -12,26 +15,76 @@
       </header>
     </div>
     <div class="slds-card__body slds-card__body_inner">
-      <my-slider min="0" max="360" step="1" title="Hue Rotation (degrees}" value="{hue}" onchange="{updateHue}">
+      <my-slider
+        min="0"
+        max="360"
+        step="1"
+        title="Hue Rotation (degrees}"
+        value="{hue}"
+        onchange="{updateHue}"
+      >
       </my-slider>
-      <my-slider min="0" max="8" step="1" title="Gaussian Blur (in pixels)" value="{blur}" onchange="{updateBlur}">
+      <my-slider
+        min="0"
+        max="8"
+        step="1"
+        title="Gaussian Blur (in pixels)"
+        value="{blur}"
+        onchange="{updateBlur}"
+      >
       </my-slider>
-      <my-slider min="0" max="1000" step="25" title="Saturation (percentage)" value="{saturation}"
-        onchange="{updateSaturation}"></my-slider>
-      <my-slider min="0" max="100" step="10" title="Grayscale (percentage)" value="{grayscale}"
-        onchange="{updateGrayscale}"></my-slider>
-      <my-slider min="0" max="1000" step="25" title="Contrast (percentage}" value="{contrast}"
-        onchange="{updateContrast}">
+      <my-slider
+        min="0"
+        max="1000"
+        step="25"
+        title="Saturation (percentage)"
+        value="{saturation}"
+        onchange="{updateSaturation}"
+      ></my-slider>
+      <my-slider
+        min="0"
+        max="100"
+        step="10"
+        title="Grayscale (percentage)"
+        value="{grayscale}"
+        onchange="{updateGrayscale}"
+      ></my-slider>
+      <my-slider
+        min="0"
+        max="1000"
+        step="25"
+        title="Contrast (percentage}"
+        value="{contrast}"
+        onchange="{updateContrast}"
+      >
       </my-slider>
-      <my-slider min="0" max="1000" step="25" title="Brightness (percentage)" value="{brightness}"
-        onchange="{updateBrightness}"></my-slider>
+      <my-slider
+        min="0"
+        max="1000"
+        step="25"
+        title="Brightness (percentage)"
+        value="{brightness}"
+        onchange="{updateBrightness}"
+      ></my-slider>
 
       <div class="slds-form-element" style="padding-top:0.5em">
         <label class="slds-checkbox_toggle slds-grid">
-          <span class="slds-form-element__label slds-m-bottom_none">Invert</span>
-          <input type="checkbox" data-id="invert" name="checkbox-inverted" value="{inverted}"
-            aria-describedby="checkbox-inverted" onchange="{updateInverted}" />
-          <span id="checkbox-inverted" class="slds-checkbox_faux_container" aria-live="assertive">
+          <span class="slds-form-element__label slds-m-bottom_none"
+            >Invert</span
+          >
+          <input
+            type="checkbox"
+            data-id="invert"
+            name="checkbox-inverted"
+            value="{inverted}"
+            aria-describedby="checkbox-inverted"
+            onchange="{updateInverted}"
+          />
+          <span
+            id="checkbox-inverted"
+            class="slds-checkbox_faux_container"
+            aria-live="assertive"
+          >
             <span class="slds-checkbox_faux"></span>
             <span class="slds-checkbox_on">Inverted</span>
             <span class="slds-checkbox_off">Normal</span>

@@ -4,30 +4,56 @@
       <header class="slds-media slds-media_center slds-has-flexi-truncate">
         <div class="slds-media__body">
           <h2 class="slds-card__header-title">
-            <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="Mandelbrot">
+            <a
+              href="javascript:void(0);"
+              class="slds-card__header-link slds-truncate"
+              title="Mandelbrot"
+            >
               <div>
-                <div class="slds-grid slds-grid_align-spread slds-p-bottom_x-small" id="progress-bar-label-id-6">
+                <div
+                  class="slds-grid slds-grid_align-spread slds-p-bottom_x-small"
+                  id="progress-bar-label-id-6"
+                >
                   <span>Mandelbrot Set Result</span>
                   <span aria-hidden="true">
-                    <strong id="progress-complete-text">{percentComplete}</strong>
+                    <strong id="progress-complete-text"
+                      >{percentComplete}</strong
+                    >
                   </span>
                 </div>
-                <div class="slds-progress-bar" aria-valuemin="0" aria-valuemax="100" aria-valuenow={percentComplete}
-                  aria-labelledby="progress-bar-label-id-6" role="progressbar">
+                <div
+                  class="slds-progress-bar"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="{percentComplete}"
+                  aria-labelledby="progress-bar-label-id-6"
+                  role="progressbar"
+                >
                   <span class="slds-progress-bar__value" id="progress-complete">
-                    <span class="slds-assistive-text">Progress: {percentComplete}%</span>
+                    <span class="slds-assistive-text"
+                      >Progress: {percentComplete}%</span
+                    >
                   </span>
                 </div>
               </div>
-              <span class="slds-text-body_small">double click to move around the set</span>
+              <span class="slds-text-body_small"
+                >double click to move around the set</span
+              >
             </a>
           </h2>
         </div>
       </header>
     </div>
-    <div class="slds-card__body slds-align_absolute-center" style="overflow-x: scroll;">
-      <canvas data-id="mandelbrot" width={width} height={height}
-        style="margin-right: 1em;margin-left:1em;border-style:double;filter: blur(0px) hue-rotate(0deg) saturate(100%) grayscale(0%) contrast(100%) brightness(100%) invert(0);"></canvas>
+    <div
+      class="slds-card__body slds-align_absolute-center"
+      style="overflow-x: scroll;"
+    >
+      <canvas
+        data-id="mandelbrot"
+        width="{width}"
+        height="{height}"
+        style="margin-right: 1em;margin-left:1em;border-style:double;filter: blur(0px) hue-rotate(0deg) saturate(100%) grayscale(0%) contrast(100%) brightness(100%) invert(0);"
+      ></canvas>
       <canvas data-id="mandelbrot-copy" style="display: none;"></canvas>
     </div>
   </article>
