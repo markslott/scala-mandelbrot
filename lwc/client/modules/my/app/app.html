@@ -13,7 +13,7 @@
         <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
             <my-image-controls onchange={imageTransform}></my-image-controls>
         </div>
-        
+
         <div class="slds-grid" style="width:100%">
             <div class="slds-col slds-size_1-of-1">
                 <article class="slds-card">
@@ -31,8 +31,9 @@
                                     class="slds-button slds-button_brand" onclick={drawPalette}>Show Color
                                     Palette</button>
                             </div>
-                            <div style="padding : 0.5em 0.5em 0.5em 0.5em"> <button class="slds-button slds-button_brand"
-                                    onclick={imageSnapshot} >Image Snapshot</button>
+                            <div style="padding : 0.5em 0.5em 0.5em 0.5em"> <button
+                                    class="slds-button slds-button_brand" onclick={imageSnapshot}>Image
+                                    Snapshot</button>
                             </div>
                         </div>
                     </div>
@@ -40,6 +41,6 @@
             </div>
         </div>
         <my-fractal-canvas xposition={xpos} yposition={ypos} zoom={zoom} depth={depth} width={width} height={height}
-        resolution={resolution} style="width:100%"></my-fractal-canvas>
+            resolution={resolution} style="width:100%"></my-fractal-canvas>
     </div>
 </template>
