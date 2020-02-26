@@ -10,6 +10,8 @@ Or, you could just run it on Heroku:
 
 Enjoy!
 
+## Screenshot
+
 ![screenshot](https://github.com/markslott/scala-mandelbrot/blob/master/doc/2020-02-20_15-41-25.png)
 
 
