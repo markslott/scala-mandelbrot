@@ -1,3 +1,5 @@
+//saved for posterity -- what it looks like without web components
+
 //global vars
 const partitionSize = 256; //size of a rendered partion in pixels squared. this is also the max resolution
 var palette = [];
@@ -46,20 +48,27 @@ window.onload = function(e) {
 };
 
 function saveImage() {
-    var canvas = document.getElementById("mandelbrot");
-    var canvas2 = document.getElementById("mandelbrot-copy");
-    canvas2.height = canvas.height;
-    canvas2.width = canvas.width;
-    var filter = getComputedStyle(canvas).filter;
-    var ctx2 = canvas2.getContext("2d");
-    ctx2.filter = filter;
-    ctx2.drawImage(canvas,0,0);
-    var img = canvas2.toDataURL("image/jpeg");
-    var iframe = "<iframe width='"+canvas.width+"px' height='"+canvas.height+"px' src='" + img + "'></iframe>"
-    var x = window.open();
-    x.document.open();
-    x.document.write(iframe);
-    x.document.close();
+  var canvas = document.getElementById("mandelbrot");
+  var canvas2 = document.getElementById("mandelbrot-copy");
+  canvas2.height = canvas.height;
+  canvas2.width = canvas.width;
+  var filter = getComputedStyle(canvas).filter;
+  var ctx2 = canvas2.getContext("2d");
+  ctx2.filter = filter;
+  ctx2.drawImage(canvas, 0, 0);
+  var img = canvas2.toDataURL("image/jpeg");
+  var iframe =
+    "<iframe width='" +
+    canvas.width +
+    "px' height='" +
+    canvas.height +
+    "px' src='" +
+    img +
+    "'></iframe>";
+  var x = window.open();
+  x.document.open();
+  x.document.write(iframe);
+  x.document.close();
 }
 
 //recenters the fractal where the user double clicked in the canvas
@@ -112,31 +121,46 @@ function updateCanvasResolutionSlider() {
 }
 
 function updateCanvasFilterSlider() {
-    var blur = document.getElementById("blur").value;
-    document.getElementById("canvasBlurSliderValue").innerText = blur;
-    var hue = document.getElementById("hue-rotate").value;
-    document.getElementById("canvasHueRotateSliderValue").innerText = hue;
-    var sat = document.getElementById("saturation").value;
-    document.getElementById("canvasSaturationSliderValue").innerText = sat;
-    var grayscale = document.getElementById("grayscale").value;
-    document.getElementById("canvasGrayscaleSliderValue").innerText = grayscale;
-    var contrast = document.getElementById("contrast").value;
-    document.getElementById("canvasContrastSliderValue").innerText = contrast;
-    var brightness = document.getElementById("brightness").value;
-    document.getElementById("canvasBrightnessSliderValue").innerText = brightness;
-    var invert = document.getElementById("invert").checked;
-    var invertval = invert ? 1 : 0;
-    var canvas = document.getElementById("mandelbrot");
-    canvas.style.filter = "blur("+blur+"px) hue-rotate("+hue+"deg) saturate("+sat+"%) grayscale("+grayscale+"%) contrast("+contrast+"%) brightness("+ brightness +"%) invert("+invertval+")" ;
+  var blur = document.getElementById("blur").value;
+  document.getElementById("canvasBlurSliderValue").innerText = blur;
+  var hue = document.getElementById("hue-rotate").value;
+  document.getElementById("canvasHueRotateSliderValue").innerText = hue;
+  var sat = document.getElementById("saturation").value;
+  document.getElementById("canvasSaturationSliderValue").innerText = sat;
+  var grayscale = document.getElementById("grayscale").value;
+  document.getElementById("canvasGrayscaleSliderValue").innerText = grayscale;
+  var contrast = document.getElementById("contrast").value;
+  document.getElementById("canvasContrastSliderValue").innerText = contrast;
+  var brightness = document.getElementById("brightness").value;
+  document.getElementById("canvasBrightnessSliderValue").innerText = brightness;
+  var invert = document.getElementById("invert").checked;
+  var invertval = invert ? 1 : 0;
+  var canvas = document.getElementById("mandelbrot");
+  canvas.style.filter =
+    "blur(" +
+    blur +
+    "px) hue-rotate(" +
+    hue +
+    "deg) saturate(" +
+    sat +
+    "%) grayscale(" +
+    grayscale +
+    "%) contrast(" +
+    contrast +
+    "%) brightness(" +
+    brightness +
+    "%) invert(" +
+    invertval +
+    ")";
 }
 
 function updateProgressComplete(progress) {
-    progress = Math.round(progress);
-    var progressBar = document.getElementById("progress-complete");
-    progressBar.style.width = progress+"%";
-    document.getElementById("progress-complete-text").innerText = progress + "% Complete";
+  progress = Math.round(progress);
+  var progressBar = document.getElementById("progress-complete");
+  progressBar.style.width = progress + "%";
+  document.getElementById("progress-complete-text").innerText =
+    progress + "% Complete";
 }
-
 
 //Color gradient generator
 function RGB2Color(r, g, b) {
@@ -180,16 +204,18 @@ function makeColorGradient(
   }
 }
 
-
 //Makes API calls to get a portion of the fractal. It then stitches together
 //the portions by drawing them on the canvas in the right place. The browser
-//permits 6 open calls at the same time... any more than that and they get 
+//permits 6 open calls at the same time... any more than that and they get
 //queued up, so at most 6 image fragments will get computed at the same time
 function compute() {
   let xposition = parseFloat(document.getElementById("xposition").value);
   let yposition = parseFloat(document.getElementById("yposition").value);
   let zoom = parseFloat(document.getElementById("zoom").value);
-  let resolution = Math.pow(2,parseInt(document.getElementById("resolution").value));
+  let resolution = Math.pow(
+    2,
+    parseInt(document.getElementById("resolution").value)
+  );
   let depth = parseInt(document.getElementById("depth").value);
   let width = parseInt(document.getElementById("canvas-width").value);
   let height = parseInt(document.getElementById("canvas-height").value);
@@ -246,7 +272,7 @@ function compute() {
             //console.log(this.responseText);
             drawFractal(this.responseText, x, y, resolution, width, height);
             blocksCompleted++;
-            updateProgressComplete(blocksCompleted/totalBlocks*100);
+            updateProgressComplete((blocksCompleted / totalBlocks) * 100);
           } else {
             console.error(this.statusText);
           }
@@ -282,12 +308,12 @@ function drawFractal(grid, x, y, res, width, height) {
 //Shows the generated color pallette. This can be altered by changing the params
 //that feed the makeColorGradient function
 function drawPalette() {
-    var canvas = document.getElementById("mandelbrot");
-    var ctx = canvas.getContext("2d");
-    canvas.height = palette.length;
-    canvas.width = 768;
-    for (let i = 0; i < palette.length; i++) {
-      ctx.fillStyle = palette[i];
-      ctx.fillRect(0, i, 768, 1);
-    }
+  var canvas = document.getElementById("mandelbrot");
+  var ctx = canvas.getContext("2d");
+  canvas.height = palette.length;
+  canvas.width = 768;
+  for (let i = 0; i < palette.length; i++) {
+    ctx.fillStyle = palette[i];
+    ctx.fillRect(0, i, 768, 1);
   }
+}

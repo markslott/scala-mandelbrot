@@ -16,6 +16,6 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
 
   def mandelbrot(startx : Double, starty : Double, distance : Double, resolution : Integer, depth : Long) =
      Action { implicit request: Request[AnyContent] =>
-     Ok(new Mandelbrot().draw(Complex(startx,starty),distance,resolution,depth));
+     Ok(new Mandelbrot().draw(Complex(startx,starty),distance,resolution,depth))
   }
 }
