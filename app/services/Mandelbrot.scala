@@ -13,7 +13,8 @@ class Mandelbrot {
     //or not? The number of iterations it takes escape (or not) determines the color
     //using a smoothing algorithm to make the color transitons look smooth
     def compute(z0 : Complex, depth : Long) : Long =  {
-        
+        //to-do make recursive so it's cool in a scala way
+        //look up scala conventios
         def mandelbrot = (z0: Complex) => {
             var (i,z) = (0,z0.copy());
             while ((z.abs < escaperadius) && (i < depth)) {
@@ -22,11 +23,11 @@ class Mandelbrot {
             } 
             (z,i,i >= depth)
          }
-        val (finalZ,iterations,didNotEscape) = mandelbrot(z0);
-        def smoothValue(i:Long,x:Double) = i - Math.log(Math.log(x))/Math.log(2);
-        val mu = smoothValue(iterations,squared(finalZ.abs));
-        val color = if (didNotEscape) 0.0 else if (mu < 0) 0.0 else mu;
-        color.toInt;
+        val (finalZ,iterations,didNotEscape) = mandelbrot(z0)
+        def smoothValue(i:Long,x:Double) = i - Math.log(Math.log(x))/Math.log(2)
+        val mu = smoothValue(iterations,squared(finalZ.abs))
+        val color = if (didNotEscape) 0.0 else if (mu < 0) 0.0 else mu
+        color.toInt
     }
 
     //takes a square grid and computes the color for each individual point. Returns a two 
