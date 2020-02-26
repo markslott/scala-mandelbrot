@@ -35,10 +35,11 @@ class Mandelbrot {
     //and only sample 144 points in the defined square. Depth is how far down to look - deeper zoom
     //levels will need larger depth values to see if that point escapes or not.
     def draw(start : Complex, distance : Double, resolution : Integer, depth : Long) : JsValue = {
-        var grid = Array.ofDim[Long](resolution,resolution)
-        for (y <- 0 until resolution; x <- 0 until resolution) {
-            grid(x)(y) = compute(Complex(start.r + distance * x / resolution ,start.i - distance * y / resolution), depth)
-        }
+        
+        def mX = (x:Long) => start.r + distance * x / resolution
+        def mY = (y:Long) => start.i - distance * y / resolution
+        
+        var grid = Array.tabulate(resolution,resolution){(x,y) => compute(Complex(mX(x),mY(y)), depth)}
         Json.toJson(grid)
     }
     
