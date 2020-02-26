@@ -1,4 +1,5 @@
 # scala-mandelbrot
+
 ## Mandelbrot set generator written using Scala
 
 Built using Play Framework for Scala (https://www.playframework.com/)
@@ -13,5 +14,3 @@ Enjoy!
 ## Screenshot
 
 ![screenshot](https://github.com/markslott/scala-mandelbrot/blob/master/doc/2020-02-20_15-41-25.png)
-
-
